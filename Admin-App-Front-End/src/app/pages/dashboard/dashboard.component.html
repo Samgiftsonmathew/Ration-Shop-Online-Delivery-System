@@ -1,0 +1,38 @@
+<!-- Navbar -->
+<div class="navbar">
+  <h1 class="navbar-title">Admin Dashboard</h1>
+  <button class="logout-button" (click)="logout()">Logout</button>
+
+</div>
+
+<!-- Main Dashboard -->
+<div class="dashboard-container">
+  <div class="dashboard-cards">
+    <button (click)="navigateToCustomer()" class="dashboard-card border-0">
+      <a routerLink="/customers">
+        <h2>Customers</h2>
+        
+      </a>
+    </button>
+
+    <button (click)="navigateToSubAdmin()" class="dashboard-card border-0">
+      <a routerLink="/subadmin">
+        <h2>Shopkeeper</h2>
+        <!-- <p>Total: 15</p> -->
+      </a>
+    </button>
+
+    <button (click)="navigateToProduct()" class="dashboard-card border-0">
+    <a routerLink="/products">
+      <h2>Products</h2>
+    </a>
+    </button>
+
+    <button (click)="navigateToDelivery()" class="dashboard-card border-0">
+    <a routerLink="/delivery">
+      <h2>Delivery Man</h2>
+      
+    </a>
+    </button>
+  </div>
+</div>

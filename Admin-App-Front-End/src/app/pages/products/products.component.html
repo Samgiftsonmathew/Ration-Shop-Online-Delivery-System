@@ -1,0 +1,94 @@
+<!-- ✅ Control Bar -->
+<div class="top-control-row">
+  <button class="add-product-btn" (click)="openModal()">➕ Add Product</button>
+  <h1 class="section-title">📦 Products (Region-wise)</h1>
+
+  <div class="filter-group">
+    <label for="region">Region:</label>
+    <select (change)="onRegionChange($any($event.target).value)">
+      <option *ngFor="let region of regions" [value]="region.id">
+        {{ region.name }}
+      </option>
+    </select>
+
+    <label for="cardTypeFilter">Card Type:</label>
+    <select id="cardTypeFilter" [(ngModel)]="selectedCardType">
+      <option value="">All</option>
+      <option *ngFor="let type of cardTypes" [value]="type">{{ type }}</option>
+    </select>
+  </div>
+</div>
+
+<!-- ✅ Product Cards Grid -->
+<div class="product-card-wrapper">
+  <div *ngFor="let product of filteredProducts(); let i = index" class="product-card">
+    <img [src]="product.imageUrl" alt="{{ product.name }}" class="product-image" />
+
+    <div class="product-details">
+      <h3>{{ product.name }}</h3>
+      <p><strong>Category:</strong> {{ product.category }}</p>
+      <p><strong>Price:</strong> ₹{{ product.price }}</p>
+      <p><strong>Stock:</strong> {{ product.stock.quantity }}</p>
+      <p><strong>Limit:</strong> {{ getAllocationText(product) }}</p>
+    </div>
+
+    <div class="action-buttons">
+      <button class="edit-btn" (click)="editProduct(product, i)">✏️ Edit</button>
+
+      <button class="delete-btn" (click)="deleteProduct(product, i)">🗑Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ✅ Modal -->
+<div *ngIf="showModal" class="modal">
+  <div class="modal-content glass-effect" [ngClass]="{ 'edit-mode': isEditing }">
+
+    <h2>{{ isEditing ? 'Edit Product' : 'Add Product' }}</h2>
+
+    <div class="input-group">
+      <label>Name:</label>
+      <input [(ngModel)]="newProduct.name" />
+    </div>
+    <div class="input-group">
+      <label>Category:</label>
+      <input [(ngModel)]="newProduct.category" />
+    </div>
+    <div class="input-group">
+      <label>Price:</label>
+      <input type="number" [(ngModel)]="newProduct.price" />
+    </div>
+    <div class="input-group">
+      <label>Image URL:</label>
+      <input [(ngModel)]="newProduct.imageUrl" />
+    </div>
+
+    <div *ngFor="let alloc of newProduct.allocations; let i = index" class="input-group">
+      <label>{{ alloc.cardType }} Limit:</label>
+      <div class="limit-buttons">
+        <button (click)="decreaseLimit(i)">➖</button>
+        <input type="number"
+           [(ngModel)]="alloc.defaultLimit"
+           min="0"
+           class="no-spinner"
+           style="width: 60px; text-align: center;" />
+        <button (click)="increaseLimit(i)">➕</button>
+      </div>
+    </div>
+
+    <button class="submit-product-btn" (click)="addProduct()">
+      {{ isEditing ? 'Update Product' : 'Add Product' }}
+    </button>
+    <button class="delete-btn" (click)="closeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- ✅ Confirm Delete Popup -->
+<div *ngIf="showDeleteConfirm" class="modal">
+  <div class="modal-content glass-effect">
+    <h3>Confirm Delete</h3>
+    <p>Are you sure you want to delete <strong>{{ productToDelete?.name }}</strong>?</p>
+    <button class="delete-btn" (click)="confirmDelete()">Yes, Delete</button>
+    <button (click)="showDeleteConfirm = false">Cancel</button>
+  </div>
+</div>

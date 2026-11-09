@@ -1,0 +1,191 @@
+<!-- Delivery Man List Table -->
+<div class="container mt-4">
+  <h2 style="text-align: center; font-weight: bold;">Delivery Men List</h2>
+
+  <!-- Region Filter Dropdown (Common for All) -->
+  <div class="row mb-3">
+    <div class="col-md-4">
+      <label for="regionFilter" class="form-label"><strong>Filter by Region:</strong></label>
+        <select
+                   id="regionFilter"
+              class="form-select"
+              [(ngModel)]="selectedRegion"
+          (change)="filterByRegion()"
+>
+  <option [value]="''">All Regions</option>
+  <option *ngFor="let region of regionOptions" [value]="region.id">
+    {{ region.name }}
+  </option>
+</select>
+
+    </div>
+    <div class="col-md-8 text-end">
+      <button class="btn btn-primary mt-4" (click)="openCreateModal()">Add Delivery Man</button>
+    </div>
+  </div>
+
+  <!-- Delivery Men Table -->
+  <table class="table table-bordered text-center">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Aadhar</th>
+        <th>Phone</th>
+        <!-- <th>Region</th> -->
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dm of filteredDeliveryMen">
+        <td>{{ dm.name }}</td>
+        <td>{{ dm.aadharNum }}</td>
+        <td>{{ dm.phoneNO }}</td>
+        <!-- <td>{{ dm.region }}</td> -->
+        <td>
+          <button class="btn btn-info btn-sm" (click)="openViewModal(dm)">View</button>
+          <button class="btn btn-warning btn-sm mx-1" (click)="openEditModal(dm)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="confirmDelete(dm.id!)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Create/Edit/View Modal -->
+<div class="modal" [ngStyle]="{ display: showModal ? 'flex' : 'none' }">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ viewMode ? 'Delivery Man Details' : (isEdit ? 'Edit Delivery Man' : 'Add Delivery Man') }}
+        </h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+
+      <!-- View Mode -->
+      <div class="modal-body" *ngIf="viewMode && selectedDeliveryMan">
+        <p><strong>Name:</strong> {{ selectedDeliveryMan.name }}</p>
+        <p><strong>Aadhar:</strong> {{ selectedDeliveryMan.aadharNum }}</p>
+        <p><strong>Phone:</strong> {{ selectedDeliveryMan.phoneNO }}</p>
+        <p><strong>Region:</strong> {{ selectedDeliveryMan.region.name || 'N/A' }}</p>
+
+
+        <h6>Delivered Orders:</h6>
+        <ul *ngIf="deliveryManOrders.length > 0">
+          <li *ngFor="let order of deliveryManOrders">{{ order }}</li>
+        </ul>
+        <p *ngIf="deliveryManOrders.length === 0">No orders available.</p>
+      </div>
+       <div class="modal-footer" *ngIf="viewMode">
+        <button class="btn btn-secondary" (click)="closeModal()">Close</button>
+      </div>
+
+<!-- Create/Edit Mode -->
+<div class="modal-body" *ngIf="!viewMode">
+  <form #dmForm="ngForm" (ngSubmit)="saveDeliveryMan(dmForm)" novalidate>
+
+    <!-- Aadhar -->
+    <div class="mb-2">
+      <label>Aadhar</label>
+      <input
+        type="number"
+        class="form-control"
+        name="aadharNumber"
+        [(ngModel)]="currentDeliveryMan.aadharNum"
+        required
+        #aadharNumber="ngModel"
+      />
+      <div class="text-danger" *ngIf="aadharNumber.invalid && aadharNumber.touched">
+        Aadhar Number is required
+      </div>
+    </div>
+
+    <!-- Name -->
+    <div class="mb-2">
+      <label>Name</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        [(ngModel)]="currentDeliveryMan.name"
+        required
+        #name="ngModel"
+      />
+      <div class="text-danger" *ngIf="name.invalid && name.touched">
+        Name is required
+      </div>
+    </div>
+
+    <!-- Phone -->
+    <div class="mb-2">
+      <label>Phone</label>
+      <input
+        type="text"
+        class="form-control"
+        name="phone"
+        [(ngModel)]="currentDeliveryMan.phoneNO"
+        required
+        #phone="ngModel"
+      />
+      <div class="text-danger" *ngIf="phone.invalid && phone.touched">
+        Phone Number is required
+      </div>
+    </div>
+
+    <!-- Region -->
+    <div class="mb-2">
+      <label>Region</label>
+      <select
+        class="form-select"
+        name="region"
+        [(ngModel)]="currentDeliveryMan.region.id"
+        required
+        #region="ngModel"
+      >
+        <option value="">-- Select Region --</option>
+        <option *ngFor="let region of regionOptions" [value]="region.id">{{ region.name }}</option>
+      </select>
+      <div class="text-danger" *ngIf="region.invalid && region.touched">
+        Region is required
+      </div>
+    </div>
+
+    <!-- Footer Buttons -->
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="submit" [disabled]="dmForm.invalid">
+        {{ isEdit ? 'Update' : 'Create' }}
+      </button>
+      <button class="btn btn-secondary" type="button" (click)="closeModal()">Cancel</button>
+    </div>
+    <div class="modal-footer" *ngIf="viewMode">
+        <button class="btn btn-secondary" (click)="closeModal()">Close</button>
+      </div>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+<!-- Delete Confirmation Modal -->
+<div class="modal" [ngStyle]="{ display: showDeleteConfirm ? 'flex' : 'none' }">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="btn-close" (click)="cancelDelete()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this delivery man?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="performDelete()">Yes</button>
+        <button class="btn btn-secondary" (click)="cancelDelete()">No</button>
+      </div>
+    </div>
+  </div>
+</div>

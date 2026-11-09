@@ -1,0 +1,413 @@
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  min-width: 300px;
+}
+
+.modal-content h3 {
+  margin-bottom: 20px;
+}
+
+.modal-content form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.modal-content form input,
+.modal-content form select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+
+
+/* Global Background */
+body {
+  background-color: #e6f2ff;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+.navbar-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.logout-button {
+  background-color: #8FDC6D;
+  color: #40493B;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #F9F871;
+}
+
+/* Wrapper */
+.product-wrapper {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+/* Filter Dropdown */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+  gap: 0.5rem;
+}
+
+select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Product Form (Popup) */
+.product-form {
+  background-color: #f1f8ff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-form h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.product-form input {
+  width: 100%;
+  max-width: 250px;
+  margin-bottom: 0.8rem;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  display: block;
+}
+
+.product-form button {
+  margin-top: 0.8rem;
+  background: linear-gradient(90deg, #ffeb3b, #a8e063); /* Yellow to light green */
+  color: #333;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.product-form button:hover {
+  background: linear-gradient(90deg, #fff176, #b2ff59);
+}
+
+/* Add Product Trigger Button */
+.add-product-btn {
+  margin: 1rem 0;
+  padding: 0.7rem 1.2rem;
+  background: linear-gradient(90deg, #ffeb3b, #a8e063);
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-product-btn:hover {
+  background: linear-gradient(90deg, #fff176, #b2ff59);
+}
+
+/* Product Card */
+.product-card {
+  display: flex;
+  align-items: flex-start;
+  background-color: #f9f9f9;
+  border-left: 6px solid #8FDC6D;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s ease;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.product-card:hover {
+  background-color: #f0fff0;
+}
+
+/* Product Image */
+.product-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Product Details */
+.product-details {
+  flex: 1;
+}
+
+.product-details h2 {
+  margin: 0;
+  color: #40493B;
+}
+
+.product-details p {
+  margin: 0.4rem 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.action-buttons button {
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Edit: Bottle Green */
+.action-buttons .edit-btn {
+  background-color: #2e7d32;
+  color: white;
+}
+
+.action-buttons .edit-btn:hover {
+  background-color: #388e3c;
+}
+
+/* Delete: Shiny Red */
+.action-buttons .delete-btn {
+  background-color: #ff1744;
+  color: white;
+}
+
+.action-buttons .delete-btn:hover {
+  background-color: #f01440;
+}
+
+/* Limit Control (+/- buttons) */
+.limit-control {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.limit-control button {
+  padding: 0.4rem 0.8rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  border: none;
+  background-color: #e0e0e0;
+  cursor: pointer;
+}
+
+.limit-control button:hover {
+  background-color: #d0f0c0;
+}
+
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+/* Modal Submit Button */
+.submit-product-btn {
+  margin-top: 1rem;
+  width: 100%;
+  background: linear-gradient(90deg, #ffeb3b, #a8e063); /* Yellow to light green */
+  color: #333;
+  border: none;
+  padding: 0.7rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.submit-product-btn:hover {
+  background: linear-gradient(90deg, #fff176, #b2ff59);
+  transform: translateY(-2px);
+}
+
+
+
+
+/* General Table Styling */
+.custom-table {
+  border-collapse: separate;
+  border-spacing: 0 10px; /* Space between rows */
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px; /* Curvy table edges */
+  overflow: hidden; /* Ensures the border-radius works with inner content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.custom-table th, .custom-table td {
+  padding: 15px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #f1f1f1;
+  text-align: center;
+}
+
+.custom-table th {
+  background-color: #343a40;
+  color: white;
+  font-weight: bold;
+}
+
+.custom-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.custom-table tr:hover {
+  background-color: #e2e6ea;
+}
+
+/* Button Styling */
+.btn {
+  font-weight: 500;
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: 1px solid #007bff;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  .custom-table th, .custom-table td {
+    padding: 10px;
+  }
+  .btn {
+    font-size: 12px;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+/* Style the dropdown in the region column */
+.region-dropdown {
+  background-color: #343a40 !important;  /* Dark gray background */
+  color: white !important;  /* White text color */
+  border: 1px solid #343a40; /* Dark border */
+  width: auto;
+  display: inline-block;
+  margin-left: 10px;
+  padding-right: 20px; /* Add padding for the custom arrow */
+  appearance: none; /* Remove the default dropdown arrow */
+  -webkit-appearance: none; /* Remove the default dropdown arrow for Webkit browsers */
+  -moz-appearance: none; /* Remove the default dropdown arrow for Firefox */
+}
+
+/* Remove the default arrow for IE */
+.region-dropdown::-ms-expand {
+  display: none;
+}
+
+/* Custom arrow (white) using CSS */
+.region-dropdown {
+  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"%3E%3Cpolygon fill="%23ffffff" points="0,0 10,0 5,10"%3E%3C/polygon%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 10px center;  /* Positioning the arrow */
+  background-size: 10px;
+}
+
+/* Customize the options text color */
+.region-dropdown option {
+  color: black;  /* Color for option text */
+}

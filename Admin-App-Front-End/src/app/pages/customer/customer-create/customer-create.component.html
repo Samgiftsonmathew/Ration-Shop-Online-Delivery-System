@@ -1,0 +1,61 @@
+<div class="header">
+  <h2>Create Customer</h2>
+  <button class="back-btn" (click)="backToList()">← Back</button>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="form-container">
+  <label>Name:</label>
+  <input type="text" formControlName="name" />
+  <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid" class="error">
+    <small *ngIf="form.get('name')?.errors?.['required']">Name is required.</small>
+    <small *ngIf="form.get('name')?.errors?.['minlength']">Name should be at least 3 characters.</small>
+  </div>
+
+  <label>Email:</label>
+  <input type="email" formControlName="email" />
+  <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="error">
+    <small *ngIf="form.get('email')?.errors?.['required']">Email is required.</small>
+    <small *ngIf="form.get('email')?.errors?.['email']">Email format is invalid.</small>
+  </div>
+
+  <label>Smartcard No:</label>
+  <input type="text" formControlName="smartcardNo" maxlength="10" />
+  <div *ngIf="form.get('smartcardNo')?.touched && form.get('smartcardNo')?.invalid" class="error">
+    <small *ngIf="form.get('smartcardNo')?.errors?.['required']">Smartcard No is required.</small>
+    <small *ngIf="form.get('smartcardNo')?.errors?.['pattern']">Smartcard No must be 10 digits.</small>
+  </div>
+
+  <label>Phone:</label>
+  <input type="text" formControlName="phone" maxlength="10" />
+  <div *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid" class="error">
+    <small *ngIf="form.get('phone')?.errors?.['required']">Phone number is required.</small>
+    <small *ngIf="form.get('phone')?.errors?.['pattern']">Phone number must be 10 digits.</small>
+  </div>
+
+  <label>Card Type:</label>
+  <select formControlName="cardType">
+    <option value="PHH">PHH</option>
+    <option value="NPHH">NPHH</option>
+    <option value="AAY">AAY</option>
+  </select>
+
+  <label>Created Date:</label>
+  <input type="datetime-local" formControlName="createdDate" />
+
+  <label>Address:</label>
+  <textarea formControlName="address"></textarea>
+  <div *ngIf="form.get('address')?.touched && form.get('address')?.invalid" class="error">
+    <small>Address is required.</small>
+  </div>
+
+  <label>Region:</label>
+  <select formControlName="regionId">
+    <option value="" disabled selected>Select a region</option>
+    <option *ngFor="let region of regions" [value]="region.id">{{ region.name }}</option>
+  </select>
+  <div *ngIf="form.get('regionId')?.touched && form.get('regionId')?.invalid" class="error">
+    <small>Region is required.</small>
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">Create</button>
+</form>

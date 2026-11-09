@@ -1,0 +1,214 @@
+<!-- Sub-admin list -->
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-center" style="font-size: 40px;">Shopkeeper List</h2>
+
+    <!-- Region Filter Dropdown -->
+    <!-- <div class="filter-bar">
+      <label for="regionFilter" class="form-label">Filter by Region:</label>
+      <select
+        id="regionFilter"
+        class="form-select"
+        [(ngModel)]="selectedRegion"
+        (change)="filterByRegion()">
+        <option [value]="''">All Regions</option>
+        <option *ngFor="let region of regions" [value]="region.id">{{ region.name }}</option>
+      </select>
+    </div> -->
+
+    <button class="add-product-btn" (click)="openModal()">➕ Add New Shopkeeper</button>
+  </div>
+
+  <div *ngIf="filteredUsers.length === 0" class="text-muted text-center">No sub-admins found.</div>
+
+  <div *ngIf="filteredUsers.length > 0" class="table-responsive">
+    <table class="table custom-table">
+      <thead class="table-dark">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>
+      Region
+      <!-- Dropdown directly in the Region header -->
+      <select
+        class="region-dropdown"
+        [(ngModel)]="selectedRegion"
+        (change)="filterByRegion()"
+        style="width: 0px; display: inline-block; margin-left: 10px;">
+        <option value="">All Regions</option>
+        <option *ngFor="let region of regions" [value]="region.id">{{ region.name }}</option>
+      </select>
+    </th>
+          <th>Role</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of filteredUsers">
+          <td>{{ u.name }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.phone }}</td>
+          <td>{{ u.address }}</td>
+          <td>{{ getRegionName(u.regionId) }}</td>
+          <td>{{ u.role }}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-primary me-2" (click)="editUser(u)">
+              Edit ✏️
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="deleteUser(u.id!)">
+              Delete 🗑️
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal for Adding/Editing Sub-admin -->
+<div *ngIf="showModal">
+  <div class="modal fade show d-block" tabindex="-1" style="background: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content p-4">
+        <div class="modal-header">
+          <h3 class="modal-title">{{ editingUserId ? 'Edit Shopkeeper' : 'Add New Shopkeeper' }}</h3>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+
+        <div class="modal-body">
+          <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="user.name"
+                name="name"
+                required
+                pattern="^[A-Za-z\s]{3,}$"
+                #name="ngModel"
+              />
+              <div *ngIf="name.invalid && name.touched" class="text-danger">
+                <small *ngIf="name.errors?.['required']">Name is required.</small>
+                <small *ngIf="name.errors?.['pattern']">Name must be at least 3 characters long and contain only letters and spaces.</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                [(ngModel)]="user.email"
+                name="email"
+                required
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                #email="ngModel"
+              />
+              <div *ngIf="email.invalid && email.touched" class="text-danger">
+                <small *ngIf="email.errors?.['required']">Email is required.</small>
+                <small *ngIf="email.errors?.['pattern']">Email must end with .gov.in, .nic.in, or .gov.</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Phone</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="user.phone"
+                name="phone"
+                required
+                pattern="^\d{10}$"
+                #phone="ngModel"
+              />
+              <div *ngIf="phone.invalid && phone.touched" class="text-danger">
+                <small *ngIf="phone.errors?.['required']">Phone number is required.</small>
+                <small *ngIf="phone.errors?.['pattern']">Phone number must be exactly 10 digits.</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Role</label>
+              <select
+                class="form-select"
+                [(ngModel)]="user.role"
+                name="role"
+                required
+                #role="ngModel"
+              >
+                <option value="" disabled>Select Role</option>
+                <option value="SUBADMIN">SUBADMIN</option>
+              </select>
+              <div *ngIf="role.invalid && role.touched" class="text-danger">
+                <small *ngIf="role.errors?.['required']">Role is required.</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Address</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="user.address"
+                name="address"
+                required
+                minlength="10"
+                #address="ngModel"
+              />
+              <div *ngIf="address.invalid && address.touched" class="text-danger">
+                <small *ngIf="address.errors?.['required']">Address is required.</small>
+                <small *ngIf="address.errors?.['minlength']">Address must be at least 10 characters long.</small>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="region" class="form-label">Region</label>
+              <select
+                id="region"
+                name="regionId"
+                class="form-select"
+                [(ngModel)]="user.regionId"
+                required
+                #region="ngModel"
+              >
+                <option value="" disabled selected>Select Region</option>
+                <option *ngFor="let region of regions" [value]="region.id">{{ region.name }}</option>
+              </select>
+              <div *ngIf="region.invalid && region.touched" class="text-danger">
+                <small *ngIf="region.errors?.['required']">Region is required.</small>
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button class="submit-product-btn" type="submit" [disabled]="userForm.invalid">Submit</button>
+              <button class="btn btn-secondary" type="button" (click)="closeModal()">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Confirmation Modal -->
+<div class="modal" [ngStyle]="{ display: showDeleteConfirm ? 'flex' : 'none' }">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="btn-close" (click)="cancelDelete()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this shopkeeper?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" (click)="performDelete()">Yes</button>
+        <button class="btn btn-secondary" (click)="cancelDelete()">No</button>
+      </div>
+    </div>
+  </div>
+</div>

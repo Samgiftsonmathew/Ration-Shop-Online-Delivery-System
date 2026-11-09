@@ -1,0 +1,45 @@
+<div class="edit-container" *ngIf="form">
+  <h2>Edit Customer</h2>
+
+  <form [formGroup]="form" (ngSubmit)="updateCustomer()" class="edit-form">
+    <label>Name:</label>
+    <input formControlName="name" />
+    <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+      <small *ngIf="form.get('name')?.errors?.['required']">Name is required</small>
+      <small *ngIf="form.get('name')?.errors?.['minlength']">Minimum 3 characters</small>
+    </div>
+
+    <label>Email:</label>
+    <input formControlName="email" />
+    <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+      <small *ngIf="form.get('email')?.errors?.['required']">Email is required</small>
+      <small *ngIf="form.get('email')?.errors?.['email']">Invalid email format</small>
+    </div>
+
+    <label>Smartcard No:</label>
+    <input type="text" formControlName="smartcardNo" />
+
+    <label>Phone:</label>
+    <input type="text" formControlName="phone" />
+
+    <label>Region:</label>
+    <select formControlName="regionId">
+      <option value="" disabled>Select Region</option>
+      <option *ngFor="let region of regions" [value]="region.id">{{ region.name }}</option>
+    </select>
+
+    <label>Card Type:</label>
+    <select formControlName="cardType">
+      <option value="" disabled>Select Card Type</option>
+      <option *ngFor="let type of cardTypes" [value]="type">{{ type }}</option>
+    </select>
+
+    <label>Address:</label>
+    <textarea formControlName="address"></textarea>
+
+    <div class="form-buttons">
+      <button type="submit" class="submit-btn">Update</button>
+      <button type="button" class="cancel-btn" (click)="backToList()">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,33 @@
+<div class="customer-detail" *ngIf="customer">
+  <h2>Customer Information</h2>
+  <p><strong>Name:</strong> {{ customer.name }}</p>
+  <p><strong>Email:</strong> {{ customer.email }}</p>
+  <p><strong>Phone:</strong> {{ customer.phone }}</p>
+  <p><strong>Smartcard No:</strong> {{ customer.smartcardNo }}</p>
+  <p><strong>Region:</strong> {{ getRegionName(customer.regionId) }}</p>
+  <p><strong>Card Type:</strong> {{ customer.cardType }}</p>
+  <p><strong>Address:</strong> {{ customer.address }}</p>
+
+  <h3>Order History</h3>
+  <div *ngIf="orders.length > 0; else noOrders">
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Amount</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.id }}</td>
+          <td>{{ order.total }}</td>
+          <td>{{ order.date | date : "short" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noOrders>
+    <p>No orders found for this customer.</p>
+  </ng-template>
+</div>

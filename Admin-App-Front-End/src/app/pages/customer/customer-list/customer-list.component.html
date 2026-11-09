@@ -1,0 +1,68 @@
+<div class="header">
+  <h2>Customer Details</h2>
+
+  <div class="header-actions">
+    <button class="create-btn" (click)="createCustomer()">Add Customer</button>
+
+    <label>Region:</label>
+      <select
+  [(ngModel)]="selectedRegionId"
+  class="dropper"
+  (change)="filterByRegion()"
+>
+  <option [ngValue]="''">All Regions</option>
+  <option *ngFor="let region of regions" [value]="region.id">
+    {{ region.name }}
+  </option>
+</select>
+
+   
+  </div>
+</div>
+
+<div class="search-bar">
+  <input
+    type="text"
+    placeholder="Search by name, email, phone..."
+    [(ngModel)]="searchTerm"
+    (input)="filterCustomers()"
+  />
+</div>
+
+<div class="customer-card-container">
+  <div *ngIf="filteredCustomers.length > 0; else noResults">
+    <div
+      class="customer-card"
+      *ngFor="let customer of filteredCustomers; let i = index"
+    >
+      <div class="customer-info">
+        <h3>{{ i + 1 }}. {{ customer.name }}</h3>
+        <p><strong>Email:</strong> {{ customer.email }}</p>
+        <p><strong>Smartcard No:</strong> {{ customer.smartcardNo }}</p>
+        <p><strong>Phone:</strong> {{ customer.phone }}</p>
+        <p><strong>Card Type:</strong> {{ customer.cardType }}</p>
+        <th>Region:</th>
+        <td>
+          {{
+            customer.region?.name || getRegionName(customer.regionId) || "N/A"
+          }}
+        </td>
+      </div>
+      <div class="customer-actions">
+        <button class="view-btn" (click)="viewDetail(customer.id!)">
+          View
+        </button>
+        <button class="edit-btn" (click)="editCustomer(customer.id!)">
+          Edit
+        </button>
+        <!-- <button class="delete-btn" (click)="deleteCustomer(customer.id!)">Delete</button> -->
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noResults>
+    <div class="no-results">
+      <p>No customers found matching your search.</p>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="login-card">
+    <h2>Welcome</h2>
+    <div class="logo">Admin</div>
+
+    <form [formGroup]="loginForm" *ngIf="!showOtpField">
+      <div class="input-group">
+        <label>Email</label>
+        <input formControlName="email" type="email" placeholder="e.g., user@gov.in" />
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error">
+          Enter a valid government email
+        </div>
+      </div>
+      <button type="button"
+        class="login-button"
+        (click)="onRequestOtp()"
+        [disabled]="loginForm.invalid || isRequestingOtp">
+  <ng-container *ngIf="!isRequestingOtp">Request OTP</ng-container>
+  <ng-container *ngIf="isRequestingOtp">Sending...</ng-container>
+</button>
+
+      <!-- <button type="button" class="login-button" (click)="onRequestOtp()"
+        [disabled]="loginForm.invalid">Request OTP</button> -->
+    </form>
+
+    <div *ngIf="showOtpField">
+      <div class="input-group">
+        <label>Enter 6-digit OTP</label>
+        <input type="text" maxlength="6" [(ngModel)]="otp" name="otp" />
+      </div>
+      <button type="button"
+        class="login-button"
+        (click)="onVerifyOtp()"
+        [disabled]="otp.length !== 6 || isVerifyingOtp">
+  <ng-container *ngIf="!isVerifyingOtp">Verify OTP</ng-container>
+  <ng-container *ngIf="isVerifyingOtp">Verifying...</ng-container>
+</button>
+
+      <!-- <button type="button" class="login-button" (click)="onVerifyOtp()">Verify OTP</button> -->
+    </div>
+
+    <p class="signup-text">
+    </p>
+  </div>
+  <!-- Popup Notification -->
+<div class="popup" *ngIf="popupMessage">
+  <div class="popup-content" [ngClass]="popupType">
+    <span>{{ popupMessage }}</span>
+    <button class="popup-close" (click)="popupMessage = ''">×</button>
+  </div>
+</div>
+
+</div>
