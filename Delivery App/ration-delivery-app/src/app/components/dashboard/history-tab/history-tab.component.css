@@ -1,0 +1,17 @@
+.tab-content {
+  padding: 24px;
+  min-width: 860px;
+  background-color: #fffbea;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+  border: 1px solid #e0e0e0;
+  margin: 10px; /* spacing between flex items */
+}
+h3 {
+  color: #2c3e50;
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}

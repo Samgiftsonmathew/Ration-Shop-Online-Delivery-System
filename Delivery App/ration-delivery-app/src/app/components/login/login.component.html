@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="login-card">
+    <h2>Login</h2>
+    <form (ngSubmit)="login()">
+      <input type="text" [(ngModel)]="userId" name="userId" placeholder="Aadhaar / Ration ID" required />
+      <input type="text" [(ngModel)]="otp" name="otp" placeholder="Enter OTP" required />
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</div>

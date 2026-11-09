@@ -1,0 +1,31 @@
+<div class="dashboard-container">
+  <div class="tabs">
+    <div class="tab-group">
+      <button
+        class="tab-button"
+        [routerLink]="['/dashboard/orders']"
+        routerLinkActive="active"
+        (click)="setTab('orders')"
+      >
+        Orders
+      </button>
+      <button
+        class="tab-button"
+        [routerLink]="['/dashboard/history']"
+        routerLinkActive="active"
+        (click)="setTab('history')"
+      >
+        History
+      </button>
+    </div>
+
+    <div class="user-actions" *ngIf="user">
+      <div class="user-info" *ngIf="user">
+  Logged in as: <strong>{{ user.name }}</strong> ({{ user.aadharNum }})
+</div>
+      <button class="logout-button" (click)="logout()">Logout</button>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>

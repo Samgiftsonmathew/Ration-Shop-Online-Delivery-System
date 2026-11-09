@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ration-delivery-app</string>
+    <string name="title_activity_main">ration-delivery-app</string>
+    <string name="package_name">com.example.rationdelivery</string>
+    <string name="custom_url_scheme">com.example.rationdelivery</string>
+</resources>

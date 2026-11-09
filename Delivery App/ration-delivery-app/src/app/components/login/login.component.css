@@ -1,0 +1,59 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #F9F871; /* Yellow */
+  font-family: Arial, sans-serif;
+}
+
+.login-card {
+  background-color: #8FDC6D; /* Green */
+  padding: 30px 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.login-card:hover {
+  transform: translateY(-5px);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px 12px;
+  margin: 10px 0;
+  border: 1px solid #bbbbbb;
+  border-radius: 6px;
+  font-size: 16px;
+  color: #333;
+}
+
+input[type="text"]:focus {
+  border-color: #40493B;
+  outline: none;
+  box-shadow: 0 0 4px #8FDC6D;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #40493B; /* Dark Olive */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+button:hover {
+  background-color: #2f362a; /* Darker Hover */
+}

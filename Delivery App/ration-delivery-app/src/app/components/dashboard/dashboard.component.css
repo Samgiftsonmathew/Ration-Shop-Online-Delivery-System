@@ -1,0 +1,47 @@
+.dashboard-container {
+  padding: 20px;
+  background-color: #F9F871;
+  min-height: 100vh;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between; /* Push logout to right */
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.tab-group {
+  display: flex;
+  gap: 20px;
+}
+
+.tab-button {
+  background-color: #40493B;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.tab-button.active,
+.tab-button:hover {
+  background-color: #2f362a;
+}
+
+.logout-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #b52a38;
+}

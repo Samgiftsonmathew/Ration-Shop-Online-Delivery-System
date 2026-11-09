@@ -1,0 +1,35 @@
+<h2>Assigned Orders</h2>
+
+<table class="delivery-table">
+  <thead>
+    <tr>
+      <th>Order ID</th>
+      <th>Status</th>
+      <th>Customer</th>
+      <th>Address</th>
+      <th>Phone</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let delivery of filteredDeliveriesbyDispatch()">
+      <td>{{ delivery.orderId }}</td>
+      <td>{{ delivery.status }}</td>
+      <td>{{ delivery.customerName }}</td>
+      <td>{{ delivery.address }}</td>
+      <td>{{ delivery.phNo }}</td>
+     <td>
+  <button
+    class="btn btn-success btn-sm"
+    (click)="markAsDelivered(delivery)"
+    [disabled]="delivery.status === 'DELIVERED'"
+  >
+    {{ delivery.status === 'DELIVERED' ? 'Finished' : 'Delivered' }}
+  </button>
+</td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="filteredDeliveriesbyDispatch().length === 0" class="text-center text-muted p-4">
+      <h5>No orders assigned</h5>
+    </div>

@@ -1,0 +1,9 @@
+<div class="container mt-4">
+  <h3>Order Details</h3>
+  <p><strong>Name:</strong> {{ order.name }}</p>
+  <p><strong>Address:</strong> {{ order?.address }}</p>
+  <p><strong>Status:</strong> {{ order?.status }}</p>
+
+  <button class="btn btn-success" (click)="markAsDelivered()">Mark as Delivered</button>
+
+</div>
