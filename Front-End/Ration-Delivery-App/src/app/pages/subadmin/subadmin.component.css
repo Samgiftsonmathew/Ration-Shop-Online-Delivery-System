@@ -1,0 +1,43 @@
+.Heading {
+  text-align: center;
+  
+}
+
+.dashboard-menu {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+
+}
+
+.dashboard-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 120px;
+  background-color: #e3f2fd;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: #0d47a1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.dashboard-box:hover {
+  background-color: #8FDC6D;
+  transform: translateY(-4px);
+}
+
+.center-container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height:70vh;
+  gap:20px;
+  flex-wrap:wrap
+}

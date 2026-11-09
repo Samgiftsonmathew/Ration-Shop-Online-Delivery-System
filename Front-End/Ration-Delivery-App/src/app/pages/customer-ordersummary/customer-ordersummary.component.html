@@ -1,0 +1,60 @@
+<app-customer-nav></app-customer-nav>
+
+<div class="container py-5">
+  <div class="row g-4">
+
+    <!-- Customer and Address Details -->
+    <div class="col-lg-7">
+      <!-- Customer -->
+      <div class="card card-yellow mb-4">
+        <div class="card-header bg-warning text-black section-header rounded-top">
+          👤 Customer Info
+        </div>
+        <div class="card-body">
+          <p><strong>Name: </strong> {{user.name}}</p>
+          <p><strong>Email: </strong> {{user.email}}</p>
+          <p><strong>Phone: </strong> +91 {{user.phone}}</p>
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="card card-green mb-4">
+        <div class="card-header bg-success text-white section-header rounded-top">
+          📍 Shipping Address
+        </div>
+        <div class="card-body">
+          <p><strong>Address: </strong>{{user.address}}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="col-lg-5">
+      <div class="card black">
+        <div class="section-title bg-dark text-white">
+          📦 Ration Order Summary
+        </div>
+        <div class="card-body">
+          <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between" *ngFor="let item of cartItems">
+              {{ item.name }} ({{ item.quantity }} {{ item.category === 'Oil' || item.category === 'oil' ? 'L' : 'Kg' }})
+              <span>₹{{ item?.price! * item?.quantity! }}</span>
+            </li>
+            <li class="list-group-item fw-bold d-flex justify-content-between">
+              Total <span>₹{{ totalPrice }}</span>
+            </li>
+          </ul>
+          <div class="d-grid">
+            <button class="btn checkout-btn btn-lg d-flex justify-content-center align-items-center"
+              [disabled]="isPlacingOrder" (click)="payAndPlaceOrder()">
+              <span *ngIf="!isPlacingOrder">🛍️ Confirm & Place Order</span>
+              <div *ngIf="isPlacingOrder" class="spinner-border spinner-border-sm text-light" role="status">
+                <span class="visually-hidden">Placing...</span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,129 @@
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== ORDER CARD ===== */
+.order-card {
+  background: linear-gradient(135deg, #fff9c4, #d0f0c0);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+}
+
+.order-id {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1c1c1c;
+}
+
+.order-info {
+  color: #444;
+  font-size: 0.95rem;
+}
+
+/* ===== STATUS BADGES ===== */
+.status-badge {
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.status-delivered {
+  background-color: #d4edda;
+  color: #28a745;
+}
+
+.status-ongoing {
+  background-color: #fff3cd;
+  color: #ffc107;
+}
+
+/* ===== ASSIGN BUTTON ===== */
+.assign-btn {
+  background-color: #8FDC6D;
+  color: #000;
+  font-weight: 600;
+  padding: 6px 18px;
+  border-radius: 20px;
+  border: none;
+  transition: 0.3s ease;
+}
+
+.assign-btn:hover {
+  background-color: #72c457;
+}
+
+/* ===== MODAL STYLING ===== */
+.modal-content {
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: none;
+}
+
+.modal-header {
+  background: linear-gradient(135deg, #fff9db, #fff3cd);
+  border-bottom: none;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.modal-title {
+  font-weight: bold;
+  color: #ffb400;
+}
+
+.btn-close {
+  background-color: #fff3cd;
+  border-radius: 50%;
+  padding: 0.4rem;
+}
+
+.modal-body {
+  background-color: #fefefe;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  padding: 1.5rem;
+}
+
+/* ===== PRODUCT LIST IN MODAL ===== */
+.product-list .list-group-item {
+  background-color: #f9f9f9;
+  border-left: 5px solid #ffc107;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #444;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.product-list .list-group-item span:last-child {
+  color: #198754;
+  font-weight: 600;
+}
+
+/* ===== MODAL ANIMATION ===== */
+.modal.fade .modal-dialog {
+  transform: translateY(20px);
+  transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog {
+  transform: translateY(0);
+}
+
+
+.delivery-card:hover {
+  transform: translateY(-5px);
+}
+.card-header-icon {
+  font-size: 2rem;
+  color: #28a745;
+}
+ 

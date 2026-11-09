@@ -1,0 +1,7 @@
+.bg-dark {
+  background-color: #000 !important;
+}
+.navbar .nav-link:hover {
+  color: #ffc107 !important;
+  text-decoration: underline;
+}

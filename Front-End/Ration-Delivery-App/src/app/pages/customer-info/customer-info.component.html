@@ -1,0 +1,50 @@
+<app-subadmin-nav></app-subadmin-nav>
+<div style="background-color: #F9F871; min-height: 100vh;">
+  <div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title">🧑‍🤝‍🧑 Manage Customers</h2>
+      <input
+        type="text"
+        class="form-control search-input ps-4 search-box"
+        placeholder="🔍 Search by name or area"
+        [(ngModel)]="searchText"
+        (input)="onSearch()"
+      />
+    </div>
+
+    <!-- Main Customer Cards Section -->
+    <div class="row g-4" *ngIf="filteredCustomers.length > 0; else noCustomers">
+      <div 
+        class="col-md-6 col-lg-4"
+        *ngFor="let customer of filteredCustomers"
+      >
+        <div class="delivery-card bg-light border-start border-4 border-success p-3 rounded shadow-sm">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <div class="delivery-name text-success fw-bold">{{ customer.name }}</div>
+              <div class="delivery-info">📱 {{ customer.phone }}</div>
+              <div class="delivery-info">📍 {{ customer.address }}</div>
+            </div>
+            <div class="card-header-icon">🧺</div>
+          </div>
+          <div class="text-end">
+            <a [routerLink]="'/customers/info/' + customer.id">
+              <button class="btn btn-sm btn-details btn-outline-success rounded-pill px-3">
+                Details
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fallback Template -->
+    <ng-template #noCustomers>
+      <div class="text-center py-5">
+        <img src="https://cdn-icons-png.flaticon.com/512/6598/6598519.png" width="120" class="mb-3" />
+        <h4 class="text-muted">No customers found!</h4>
+        <p>Try adjusting your search or check back later.</p>
+      </div>
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+body {
+    background-color: #f7fdf7;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .section-title {
+    color: #495057;
+    font-weight: 700;
+  }
+
+  .delivery-card {
+    background: linear-gradient(135deg, #fff9c4, #d0f0c0);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .delivery-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-header-icon {
+    font-size: 2rem;
+    color: #28a745;
+  }
+
+  .delivery-name {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  .delivery-info {
+    color: #555;
+  }
+
+  .btn-action {
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+  }
+
+  .btn-details {
+    background-color: #28a745;
+    color: white;
+  }
+
+  .btn-edit {
+    background-color: #ffc107;
+    color: black;
+  }
+
+  .btn-delete {
+    background-color: #dc3545;
+    color: white;
+  }
+   .search-box {
+    max-width: 300px;
+  }

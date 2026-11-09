@@ -1,0 +1,86 @@
+<app-customer-nav></app-customer-nav>
+
+<div class="container py-5">
+  <h2 class="mb-4 text-dark fw-bold">📦 Monthly Ration Orders</h2>
+
+  <!-- Conditional rendering -->
+  <ng-container *ngIf="groupedOrders && groupedOrders.length > 0; else noOrders">
+    <ng-container *ngFor="let group of groupedOrders">
+      <div class="mb-5">
+        <h4 class="text-primary">{{ group.month }}</h4>
+
+        <ng-container *ngFor="let order of group.orders">
+          <div class="order-card p-4 mb-3 shadow-sm border-start"
+            [ngClass]="{
+              'border-start-success': order.status === 'DELIVERED',
+              'border-start-danger': order.status === 'CANCELLED',
+              'border-start-warning': order.status === 'PENDING' || order.status === 'DISPATCHED'
+            }">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-bold">Order #{{ order.orderId }}</div>
+                <div class="text-muted small">
+                  {{ order.status === 'DELIVERED' ? 'Delivered on' : 'Expected on' }}
+                  {{ formatDeliveryDate(order.deliveryDate) }}
+                </div>
+              </div>
+              <span class="status-badge"
+                [ngClass]="{
+                  'status-delivered': order.status === 'DELIVERED',
+                  'status-ongoing': order.status === 'PENDING' || order.status === 'DISPATCHED',
+                  'status-cancelled': order.status === 'CANCELLED'
+                }">
+                {{ order.status }}
+              </span>
+            </div>
+            <hr />
+            <div class="text-end">
+              <button class="btn btn-outline-primary btn-sm px-4" data-bs-toggle="modal"
+                data-bs-target="#orderModal" (click)="openModal(group.month, order.items)">
+                View Products
+              </button>
+
+              <button *ngIf="order.status === 'PENDING' || order.status === 'DISPATCHED'"
+                class="btn btn-outline-danger btn-sm px-4 mx-2" (click)="cancelOrder(order.orderId)">
+                Cancel Order
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <!-- Modal for product items -->
+  <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title" id="orderModalLabel">
+            {{ selectedMonth }} - Products
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group product-list">
+      <ul class="list-group">
+          <li *ngFor="let item of selectedItems" class="list-group-item d-flex justify-content-between">
+            <span>{{ item.productName }} ({{ item.quantity }} {{ item.category === 'Oil' || item.category === 'oil' ? 'L' : 'Kg' }})</span>
+            <span>₹{{ item.price }}</span>
+          </li>
+        </ul>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fallback for no orders -->
+  <ng-template #noOrders>
+    <div class="text-center py-5">
+      <img src="https://cdn-icons-png.flaticon.com/512/6193/6193490.png" width="130" class="mb-3" />
+      <h4 class="text-muted">No orders found!</h4>
+      <p>You haven’t placed any monthly ration orders yet.</p>
+    </div>
+  </ng-template>
+</div>

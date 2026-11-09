@@ -1,0 +1,6 @@
+.bg-black {
+  background-color: #000 !important;
+}
+.navbar .nav-link:hover {
+  color: #ffc107 !important;
+}

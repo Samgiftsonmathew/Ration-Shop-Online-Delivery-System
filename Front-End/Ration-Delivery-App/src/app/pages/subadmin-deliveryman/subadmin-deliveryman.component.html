@@ -1,0 +1,129 @@
+<app-subadmin-nav></app-subadmin-nav>
+
+<div style="background-color: #F9F871; min-height: 100vh;">
+  <div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="section-title">👨‍💼 Manage Delivery Personnel</h2>
+      <div class="mb-3">
+        <input type="text" class="form-control" placeholder="🔍 Search by name, phone, or Aadhar"
+          [(ngModel)]="searchText" (input)="filterDeliveryMen()" />
+      </div>
+
+      <button class="btn btn-success btn-sm rounded-pill px-4"
+        data-bs-target="#addDeliveryModal" data-bs-toggle="modal" (click)="openAddModal()">
+        + Add Delivery Man
+      </button>
+    </div>
+
+    <div class="row g-4 ">
+      <ng-container *ngIf="filteredDeliveryMen.length > 0; else noDeliveryMen">
+        <div class="col-md-6 col-lg-4 " *ngFor="let man of filteredDeliveryMen">
+
+          <div class="delivery-card bg-light border-start border-4 border-success p-3 rounded shadow-sm">
+
+            <div class="d-flex justify-content-between">
+              <div>
+                <h5>{{ man?.name }}</h5>
+                <p>📱 {{ man?.phoneNO }}</p>
+                <p>🆔 {{ man?.aadharNum }}</p>
+
+
+              </div>
+              <div class="fs-2">🛵</div>
+            </div>
+
+            <div class="text-end mt-3">
+              <button class="btn btn-sm btn-info me-2" (click)="viewDetails(man)" data-bs-toggle="modal"
+                data-bs-target="#detailsModal">Details</button>
+              <button class="btn btn-sm btn-warning me-2" (click)="editDeliveryMan(man)" data-bs-toggle="modal"
+                data-bs-target="#addDeliveryModal">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteDeliveryMan(man.id)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <ng-template #noDeliveryMen>
+      <div class="text-center py-5">
+        <img src="https://cdn-icons-png.flaticon.com/512/8189/8189621.png" width="120" class="mb-3" />
+        <h4 class="text-muted">No delivery personnel added yet!</h4>
+        <p>Click the <strong>"Add Delivery Man"</strong> button to create one.</p>
+      </div>
+    </ng-template>
+  </div>
+
+
+
+  <!-- Add/Edit Modal -->
+  <div class="modal fade" id="addDeliveryModal" tabindex="-1" aria-labelledby="addDeliveryModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content rounded">
+        <div class="modal-header bg-light">
+          <h5 class="modal-title" id="addDeliveryModalLabel">Add / Edit Delivery Man</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="deliveryManForm" (ngSubmit)="onSave()">
+            <input type="text" formControlName="name" class="form-control mb-2" placeholder="Full Name" />
+            <div *ngIf="f['name'].touched && f['name'].invalid" class="text-danger">Valid name required</div>
+
+            <input type="tel" formControlName="phoneNO" class="form-control mb-2" placeholder="Phone Number" />
+            <div *ngIf="f['phoneNO'].touched && f['phoneNO'].invalid" class="text-danger">Valid phone number required
+            </div>
+
+            <input type="text" formControlName="aadharNum" class="form-control mb-2" placeholder="Aadhar Number" />
+            <div *ngIf="f['aadharNum'].touched && f['aadharNum'].invalid" class="text-danger">Valid Aadhar number
+              required</div>
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success" [disabled]="isSaving">
+                <span *ngIf="!isSaving">💾 Save</span>
+                <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-1" role="status"
+                  aria-hidden="true"></span>
+                <span *ngIf="isSaving">Saving...</span>
+              </button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Details Modal -->
+  <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content rounded">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title" id="detailsModalLabel">Delivery Man Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" *ngIf="selectedMan">
+          <p><strong>Name:</strong> {{ selectedMan.name }}</p>
+          <p><strong>Phone:</strong> {{ selectedMan.phoneNO }}</p>
+          <p><strong>Aadhar:</strong> {{ selectedMan.aadharNum }}</p>
+
+        </div>
+        <div *ngIf="orders.length > 0; else noOrders">
+          <hr />
+          <h6>Assigned Orders:</h6>
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let order of orders">
+              <strong>Order ID:</strong> {{ order.orderId }} <br />
+              <strong>Customer:</strong> {{ order.customerName || 'N/A' }} <br />
+              <strong>Status:</strong> {{ order.status || 'N/A' }}
+            </li>
+          </ul>
+        </div>
+
+        <ng-template #noOrders>
+          <hr />
+          <p class="text-muted">No orders assigned.</p>
+        </ng-template>
+      </div>
+
+
+    </div>
+  </div>
+</div>

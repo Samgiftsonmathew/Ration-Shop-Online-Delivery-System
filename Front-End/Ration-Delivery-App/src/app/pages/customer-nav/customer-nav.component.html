@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-black shadow-sm py-3">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold text-warning" routerLink="/dashboard">
+      🛒 RationKart
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#customerNavbar"
+      aria-controls="customerNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="customerNavbar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-white" routerLink="/customer/dashboard">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" routerLink="/customer/order_history">My Orders</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto d-flex align-items-center">
+        <li class="nav-item text-light mx-3 d-flex align-items-center">
+          <i class="bi bi-person-circle me-2"></i>
+          {{ userlist.name }}
+        </li>
+        <button class="btn btn-sm btn-outline-warning rounded-pill px-3" (click)="logout()">
+          Logout
+        </button>
+       
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,152 @@
+<app-subadmin-nav></app-subadmin-nav>
+
+<div class="container py-5">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center text-muted">
+    Loading customer details...
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Customer Details Card -->
+  <div *ngIf="!isLoading && customer">
+
+    <!-- Title & Back -->
+    <div class="mb-4 d-flex justify-content-between align-items-center">
+      <h2 class="section-title">👤 Customer Details</h2>
+      <a routerLink="/subadmin/customers" class="btn back-btn">← Back</a>
+    </div>
+
+    <!-- Customer Card -->
+    <div class="card card-highlight p-4 mb-4">
+      <div class="row g-3">
+        <div class="col-md-4 text-center">
+          
+          <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png"  alt="Profile"
+            class="img-fluid rounded-circle mb-3" width="120" height="120" style="object-fit: cover;" />
+          <!-- <div class="profile-header">{{ customer.name }}</div> -->
+           <div class="profile-header fw-bold mb-2">{{ customer.name }}</div>
+          <span class="text-muted">ID: {{ customer.id }}</span>
+        </div>
+
+        <div class="col-md-8">
+          <div class="row mb-3">
+            <div class="col-sm-4 info-label">📱 Phone</div>
+            <div class="col-sm-8 info-value">+91 {{ customer.phone }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-4 info-label">📧 Email</div>
+            <div class="col-sm-8 info-value">{{ customer.email }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-4 info-label">🏠 Address</div>
+            <div class="col-sm-8 info-value">{{ customer.address }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-4 info-label">🎫 Smart Card No</div>
+            <div class="col-sm-8 info-value">{{ customer.smartcardNo }}</div>
+          </div>
+          <!-- <div class="row mb-3">
+            <div class="col-sm-4 info-label">🗺️ Region</div>
+            <div class="col-sm-8 info-value">{{ customer.region?.name }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-4 info-label">🛡️ Role</div>
+            <div class="col-sm-8 info-value">{{ customer.role }}</div>
+          </div> -->
+          <!-- <div class="row mb-3">
+            <div class="col-sm-4 info-label">💳 Card Type</div>
+            <div class="col-sm-8 info-value">{{ customer.cardType }}</div>
+          </div> -->
+          <div class="row mb-3">
+            <div class="col-sm-4 info-label">📅 Created</div>
+            <div class="col-sm-8 info-value">{{ customer.createdDate | date:'medium' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+<!-- Order History Placeholder -->
+<div class="container py-5">
+  <h2 class="mb-4 text-dark fw-bold">📦 Monthly Ration Orders</h2>
+
+  <!-- Check if orders exist -->
+  <ng-container *ngIf="groupedOrders && groupedOrders.length > 0; else noOrders">
+    <ng-container *ngFor="let group of groupedOrders">
+      <div class="mb-5">
+        <h4 class="text-primary">{{ group.month }}</h4>
+
+        <ng-container *ngFor="let order of group.orders">
+          <div class="order-card p-4 mb-3 shadow-sm border-start" [ngClass]="{
+              'border-start-success': order.status === 'DELIVERED',
+              'border-start-danger': order.status === 'CANCELLED',
+              'border-start-warning': order.status === 'PENDING' || order.status === 'DISPATCHED'
+            }">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <div class="fw-bold">Order #{{ order.orderId }}</div>
+                <div class="text-muted small">
+                  {{ order.status === 'DELIVERED' ? 'Delivered on' : 'Expected on' }}
+                  {{ formatDeliveryDate(order.deliveryDate) }}
+                </div>
+              </div>
+              <span class="status-badge" [ngClass]="{
+                  'status-delivered': order.status === 'DELIVERED',
+                  'status-cancelled': order.status === 'CANCELLED',
+                  'status-ongoing': order.status === 'PENDING' || order.status === 'DISPATCHED'
+                }">
+                {{ order.status }}
+              </span>
+            </div>
+            <hr>
+            <div class="text-end">
+              <button class="btn btn-outline-primary btn-sm px-4" data-bs-toggle="modal" data-bs-target="#orderModal"
+                (click)="openModal(group.month, order.items)">
+                View Products
+              </button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <!-- Modal -->
+  <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title" id="orderModalLabel">
+            {{ selectedMonth }} - Products
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+       <ul class="list-group">
+          <li *ngFor="let item of selectedItems" class="list-group-item d-flex justify-content-between">
+            <span>{{ item.productName }} ({{ item.quantity }} {{ item.category === 'Oil' || item.category === 'oil' ? 'L' : 'Kg' }})</span>
+            <span>₹{{ item.price }}</span>
+          </li>
+       </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Empty state fallback -->
+  <ng-template #noOrders>
+    <div class="text-center py-5">
+      <img src="https://cdn-icons-png.flaticon.com/512/6193/6193490.png" width="130" class="mb-3" />
+      <h4 class="text-muted">No orders found</h4>
+      <p>This customer has not placed any monthly ration orders yet.</p>
+    </div>
+  </ng-template>
+</div>

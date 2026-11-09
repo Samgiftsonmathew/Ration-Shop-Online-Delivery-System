@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="login-card">
+    <div *ngIf="isLoading" class="loader-overlay">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-2">Sending OTP...</p>
+    </div>
+    <h2>Welcome</h2>
+    <div class="logo">A</div>
+
+    <!-- Toggle Button -->
+   <div class="text-center mb-4">
+      <button class="btn btn-outline-primary w-100" (click)="toggleRole()">
+        {{ isOwner ? 'Switch to User Login' : 'Switch to Ration Owner Login' }}
+      </button>
+    </div>
+
+    <form [formGroup]="loginForm" *ngIf="!showOtpField && !isLoading">
+      <!-- Show Email if Owner -->
+      <div class="input-group" *ngIf="isOwner">
+        <label>Email:</label>
+        <input formControlName="email" type="email" placeholder="e.g., owner@gov.in" />
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error">
+          Enter a valid government email
+        </div>
+      </div>
+
+      <!-- Show Smart Card No if User -->
+      <div class="input-group" *ngIf="!isOwner">
+        <label>Smart Card No:</label>
+        <input formControlName="smartCard" type="text" placeholder="Enter Smart Card No" />
+        <div *ngIf="loginForm.get('smartCard')?.invalid && loginForm.get('smartCard')?.touched" class="error">
+          Enter a valid Smart Card No
+        </div>
+      </div>
+
+      <button type="button" class="login-button" (click)="onRequestOtp()" [disabled]="loginForm.invalid">
+        Request OTP
+      </button>
+    </form>
+
+    <div *ngIf="showOtpField">
+      <div class="input-group">
+        <label>Enter 6-digit OTP</label>
+        <input type="text" maxlength="6" [(ngModel)]="otp" name="otp" />
+      </div>
+      <button type="button" class="login-button" (click)="onVerifyOtp()">Verify OTP</button>
+    </div>
+
+    
+  </div>
+</div>
+
+<!-- OTP Modal -->
+<div class="modal fade" id="otpModal" tabindex="-1" aria-labelledby="otpModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg rounded-4">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="otpModalLabel">Enter OTP</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        <p>Please enter the OTP sent to your {{ isOwner ? 'email' : 'smart card number' }}</p>
+        <input
+          type="text"
+          [(ngModel)]="otp"
+          maxlength="6"
+          class="form-control text-center fs-4 my-3"
+          placeholder="Enter 6-digit OTP"
+        />
+        <button class="btn btn-success w-100" (click)="onVerifyOtp()">Verify OTP</button>
+      </div>
+    </div>
+  </div>
+</div>

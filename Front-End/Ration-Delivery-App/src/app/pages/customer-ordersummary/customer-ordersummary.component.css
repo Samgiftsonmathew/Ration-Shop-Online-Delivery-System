@@ -1,0 +1,49 @@
+  body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .section-header {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .card-yellow {
+    border-left: 6px solid #ffc107;
+    background: linear-gradient(to right, #fffbe6, #fff9c4);
+  }
+
+  .card-green {
+    border-left: 6px solid #28a745;
+    background: linear-gradient(to right, #e8f5e9, #c8e6c9);
+  }
+
+  .card-black {
+    border-left: 6px solid #000;
+    background: linear-gradient(to right, #f1f1f1, #e0e0e0);
+  }
+
+  .checkout-btn {
+    background-color: #000;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .checkout-btn:hover {
+    background-color: #ffc107;
+    color: #000;
+  }
+
+  .card {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s;
+  }
+
+  .card:hover {
+    transform: scale(1.01);
+  }
